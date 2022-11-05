@@ -1,0 +1,864 @@
+﻿<Window x:Class="Connect4Minimax.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dg="http://schemas.microsoft.com/wpf/2008/toolkit"
+        xmlns:local="clr-namespace:Connect4Minimax"
+        xmlns:converters="clr-namespace:Connect4Minimax.Converters"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:Connect4VM></local:Connect4VM>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" 
+                        BorderThickness="0"
+                        Padding="0" 
+                        BorderBrush="Transparent" 
+                        CornerRadius="0" 
+                        Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="GridWindow">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="{Binding ElementName=GridWindow, Path=ActualHeight}" />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="Blue"/>
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="DodgerBlue"/>
+        <Rectangle Grid.Column="2" Fill="Green"/>
+        <Grid x:Name="GridMain" Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--Circles-->
+            <!--Fila 1-->
+            <Ellipse Grid.Row="5" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila1[0]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[0]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[0]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Row="4" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila1[1]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[1]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[1]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Row="3" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila1[2]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[2]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[2]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Row="2" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila1[3]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[3]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[3]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Row="1" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila1[4]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[4]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[4]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Row="0" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila1[5]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[5]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila1[5]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+
+            <!--Fila 2-->
+            <Ellipse Grid.Column="1" Grid.Row="5" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila2[0]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[0]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[0]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="1" Grid.Row="4" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila2[1]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[1]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[1]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="1" Grid.Row="3" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila2[2]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[2]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[2]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="1" Grid.Row="2" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila2[3]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[3]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[3]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="1" Grid.Row="1" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila2[4]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[4]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[4]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="1" Grid.Row="0" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila2[5]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[5]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila2[5]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+
+            <!--Fila 3-->
+            <Ellipse Grid.Column="2" Grid.Row="5" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila3[0]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[0]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[0]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="2" Grid.Row="4" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila3[1]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[1]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[1]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="2" Grid.Row="3" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila3[2]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[2]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[2]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="2" Grid.Row="2" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila3[3]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[3]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[3]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="2" Grid.Row="1" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila3[4]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[4]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[4]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="2" Grid.Row="0" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila3[5]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[5]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila3[5]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+
+            <!--Fila 4-->
+            <Ellipse Grid.Column="3" Grid.Row="5" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila4[0]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[0]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[0]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="3" Grid.Row="4" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila4[1]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[1]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[1]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="3" Grid.Row="3" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila4[2]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[2]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[2]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="3" Grid.Row="2" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila4[3]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[3]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[3]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="3" Grid.Row="1" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila4[4]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[4]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[4]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="3" Grid.Row="0" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila4[5]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[5]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila4[5]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+
+            <!--Fila 5-->
+            <Ellipse Grid.Column="4" Grid.Row="5" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila5[0]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[0]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[0]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="4" Grid.Row="4" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila5[1]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[1]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[1]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="4" Grid.Row="3" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila5[2]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[2]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[2]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="4" Grid.Row="2" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila5[3]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[3]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[3]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="4" Grid.Row="1" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila5[4]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[4]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[4]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="4" Grid.Row="0" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila5[5]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[5]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila5[5]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+
+            <!--Fila 6-->
+            <Ellipse Grid.Column="5" Grid.Row="5" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila6[0]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[0]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[0]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="5" Grid.Row="4" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila6[1]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[1]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[1]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="5" Grid.Row="3" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila6[2]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[2]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[2]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="5" Grid.Row="2" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila6[3]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[3]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[3]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="5" Grid.Row="1" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila6[4]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[4]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[4]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="5" Grid.Row="0" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila6[5]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[5]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila6[5]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+
+            <!--Fila 7-->
+            <Ellipse Grid.Column="6" Grid.Row="5" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila7[0]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[0]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[0]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="6" Grid.Row="4" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila7[1]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[1]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[1]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="6" Grid.Row="3" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila7[2]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[2]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[2]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="6" Grid.Row="2" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila7[3]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[3]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[3]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="6" Grid.Row="1" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila7[4]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[4]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[4]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+            <Ellipse Grid.Column="6" Grid.Row="0" Width="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}" Height="{Binding ElementName=GridMain, Path=ActualHeight, Converter={converters:PercentageConverter}, ConverterParameter='0.13'}">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Setter Property="Fill" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColoresFila7[5]}" Value="0">
+                                <Setter Property="Fill" Value="White"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[5]}" Value="1">
+                                <Setter Property="Fill" Value="Red"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColoresFila7[5]}" Value="2">
+                                <Setter Property="Fill" Value="Yellow"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+            </Ellipse>
+
+            <TextBlock HorizontalAlignment="Center" FontSize="20" FontFamily="System" Grid.ColumnSpan="4" Padding="5" Grid.Row="6" TextWrapping="Wrap" Text="{Binding Message}"></TextBlock>
+
+            <!--Buttons-->
+            <Button Grid.RowSpan="7" x:Name="btnFila1" Background="Transparent"  BorderThickness="0" Click="Button_Click"></Button>
+            <Button Grid.RowSpan="7" x:Name="btnFila2" Background="Transparent" BorderThickness="0" Grid.Column="1" Click="Button_Click_1"></Button>
+            <Button Grid.RowSpan="7" x:Name="btnFila3" Background="Transparent" BorderThickness="0" Grid.Column="2" Click="btnFila3_Click"></Button>
+            <Button Grid.RowSpan="7" x:Name="btnFila4" Background="Transparent" BorderThickness="0" Grid.Column="3" Click="btnFila4_Click"></Button>
+            <Button Grid.RowSpan="7" x:Name="btnFila5" Background="Transparent" BorderThickness="0" Grid.Column="4" Click="btnFila5_Click"></Button>
+            <Button Grid.RowSpan="7" x:Name="btnFila6" Background="Transparent" BorderThickness="0" Grid.Column="5" Click="btnFila6_Click"></Button>
+            <Button Grid.RowSpan="7" x:Name="btnFila7" Background="Transparent" BorderThickness="0" Grid.Column="6" Click="btnFila7_Click"></Button>
+
+            <Button x:Name="btnNuevo" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="3" Content="Nuevo Juego" Click="btnNuevo_Click">
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="DarkBlue"/>
+                        <Setter Property="BorderBrush" Value="White"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Margin" Value="5 10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
