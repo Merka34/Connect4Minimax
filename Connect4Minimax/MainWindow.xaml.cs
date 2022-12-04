@@ -46,7 +46,7 @@ namespace Connect4Minimax
             {
                 for (int x = 0; x < 7; x++)
                 {
-                    if (conecta4.arr[q, w] == 0)
+                    if (conecta4.tablero[q, w] == 0)
                     {
                         switch (q)
                         {
@@ -75,7 +75,7 @@ namespace Connect4Minimax
                                 break;
                         }
                     }
-                    if (conecta4.arr[q, w] == 1)
+                    if (conecta4.tablero[q, w] == 1)
                     {
                         switch (q)
                         {
@@ -104,7 +104,7 @@ namespace Connect4Minimax
                                 break;
                         }
                     }
-                    if (conecta4.arr[q, w] == 2)
+                    if (conecta4.tablero[q, w] == 2)
                     {
                         switch (q)
                         {
@@ -143,36 +143,35 @@ namespace Connect4Minimax
 
         public async void PlayerClick(int idFila)
         {
-            if (conecta4.endt == 0 && conecta4.turn != conecta4.cpu)
+            if (conecta4.endt == 0 && conecta4.turnoID != conecta4.cpuID)
             {
                 if ((idFila >= 0) && (idFila < 7))
                 {
-                    if (conecta4.add(idFila, conecta4.plr) == 0)
+                    if (conecta4.Agregar(idFila, conecta4.playerID) == 0)
                     {
-                        //Draw(this.CreateGraphics());
                         Registrar();
-                        conecta4.turncheck();
-                        conecta4.turn = conecta4.cpu;
-                        Connect4VM.Instance.Message = "Turno del CPU";
+                        conecta4.VerificarTurno();
+                        conecta4.turnoID = conecta4.cpuID;
                         if (conecta4.endt == 1)
                         {
                             return;
                         }
+                        Connect4VM.Instance.Message = "Turno del CPU";
+                        
                         await Task.Delay(800);
                         if (conecta4.endt == 0)
                         {
                             int ck;
                             conecta4.col = conecta4.Think();
-                            ck = conecta4.add(conecta4.col, conecta4.cpu);
+                            ck = conecta4.Agregar(conecta4.col, conecta4.cpuID);
                             if (ck == 0)
                             {
-                                conecta4.lin = 6 - conecta4.tops[conecta4.col];
-                                conecta4.turn = conecta4.plr;
+                                conecta4.lin = 6 - conecta4.cantidades[conecta4.col];
+                                conecta4.turnoID = conecta4.playerID;
                             }
                         }
                         Registrar();
-                        //Draw(this.CreateGraphics());
-                        conecta4.turncheck();
+                        conecta4.VerificarTurno();
                         if (conecta4.endt == 1)
                         {
                             return;
